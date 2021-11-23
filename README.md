@@ -84,3 +84,72 @@ Some settings (like corexy setup,variable spindle) needs to be changed trough th
 
 Hopefully This instructables was helpful and your cnc machine is up and running!
 If something is wrong/missing feel free to point it out in the comments.
+
+
+Before moving fuurther I would like to tell you something about PCB
+
+Yes PCB are the heart of the electronics based project usually we hesitate to try custom PCB and opt to homemade solutions
+
+like breadboard or Zero PCB earlier I also was in the same boat, I hesitate to try custom PCB my belief was they are much expensive.
+
+but then I came to know about [JLCPCB.COM](https://jlcpcb.com/IAT) and I was totally surprised how low price PCB's are they offering 
+
+there PCB quality is best in market, now I always go with PCB for my project and [JLCPCB.COM](https://jlcpcb.com/IAT) is my trusted 
+
+PCB manufacturer, you can also try there PCB service for more details you can visit their website [JLCPCB.COM](https://jlcpcb.com/IAT)
+You can also try there new purple colour for PCB without any extra cost.
+If new user signup today from this link [JLCPCB](https://jlcpcb.com/IAT ) you will get 30$ coupon from [JLCPCB](https://jlcpcb.com/IAT ).
+![image](https://user-images.githubusercontent.com/19898602/134336832-cb9953e9-02a6-4ff7-9d27-2caad10fe7c7.png)
+![image](https://user-images.githubusercontent.com/19898602/130722577-c30b7b43-ea89-4847-9c6b-058f9fabeda3.png)![image](https://user-images.githubusercontent.com/19898602/130722585-b5268db1-5f17-428f-ba60-b823140f2a70.png)
+
+
+
+```javascript
+
+volatile long temp, counter = 0; //This variable will increase or decrease depending on the rotation of encoder
+    
+void setup() {
+  Serial.begin (9600);
+
+  pinMode(2, INPUT_PULLUP); // internal pullup input pin 2 
+  
+  pinMode(3, INPUT_PULLUP); // internalเป็น pullup input pin 3
+   //Setting up interrupt
+  //A rising pulse from encodenren activated ai0(). AttachInterrupt 0 is DigitalPin nr 2 on moust Arduino.
+  attachInterrupt(0, ai0, RISING);
+   
+  //B rising pulse from encodenren activated ai1(). AttachInterrupt 1 is DigitalPin nr 3 on moust Arduino.
+  attachInterrupt(1, ai1, RISING);
+  }
+   
+  void loop() {
+  // Send the value of counter
+  if( counter != temp ){
+  Serial.println (counter);
+  temp = counter;
+  }
+  }
+   
+  void ai0() {
+  // ai0 is activated if DigitalPin nr 2 is going from LOW to HIGH
+  // Check pin 3 to determine the direction
+  if(digitalRead(3)==LOW) {
+  counter++;
+  }else{
+  counter--;
+  }
+  }
+   
+  void ai1() {
+  // ai0 is activated if DigitalPin nr 3 is going from LOW to HIGH
+  // Check with pin 2 to determine the direction
+  if(digitalRead(2)==LOW) {
+  counter--;
+  }else{
+  counter++;
+  }
+  }
+
+
+```
+
